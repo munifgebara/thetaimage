@@ -5,7 +5,6 @@ enum TipoUsuario{
 
 
 entity Usuario {
-	uuid UUID @id
     nome String
     email String
     senha String
@@ -13,43 +12,37 @@ entity Usuario {
 }
 
 entity Dataset {
-	uuid UUID @id
     nome String
-    descricao TextBlob 
+    descricao TextBlob
     diferencaMinima Double
 }
 
 entity Etiqueta {
-	uuid UUID @id
 	nome String
 }
 
 entity Classe {
-	uuid UUID @id
 	nome String
 }
 
 entity Conjunto {
-	uuid UUID @id
     nome String
 }
 
 entity Etiquetagem {
-    uuid UUID @id
-	x Double
+  	x Double
     y Double
     largura Double
     altura Double
 }
 
 entity Imagem {
-   uuid UUID @id
    nome String
    caminho String
    mimeType String
    largura Integer
    altura Integer
-   dados ImageBlob 
+   dados ImageBlob
 }
 
 relationship ManyToOne {
@@ -84,10 +77,6 @@ relationship ManyToOne {
 
 relationship ManyToOne {
 	Imagem{classe} to Classe
-}
-
-relationship OneToMany {
-    Cliente{pedidos} to Pedido{cliente}
 }
 
 

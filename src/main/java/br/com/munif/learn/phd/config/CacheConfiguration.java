@@ -41,6 +41,13 @@ public class CacheConfiguration {
             createCache(cm, br.com.munif.learn.phd.repository.UserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, br.com.munif.learn.phd.repository.UserRepository.USERS_BY_EMAIL_CACHE);
             createCache(cm, br.com.munif.learn.phd.domain.Authority.class.getName());
+            createCache(cm, br.com.munif.learn.phd.domain.Classe.class.getName());
+            createCache(cm, br.com.munif.learn.phd.domain.Conjunto.class.getName());
+            createCache(cm, br.com.munif.learn.phd.domain.Dataset.class.getName());
+            createCache(cm, br.com.munif.learn.phd.domain.Etiqueta.class.getName());
+            createCache(cm, br.com.munif.learn.phd.domain.Etiquetagem.class.getName());
+            createCache(cm, br.com.munif.learn.phd.domain.Imagem.class.getName());
+            createCache(cm, br.com.munif.learn.phd.domain.Usuario.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
