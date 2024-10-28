@@ -1,0 +1,23 @@
+{
+  "annotations": {
+    "changelogDate": "20240919202952"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Conjunto",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityName": "dataset",
+      "relationshipName": "dataset",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

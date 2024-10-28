@@ -1,0 +1,41 @@
+{
+  "annotations": {
+    "changelogDate": "20240919202955"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "x",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "y",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "largura",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "altura",
+      "fieldType": "Double"
+    }
+  ],
+  "name": "Etiquetagem",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityName": "etiqueta",
+      "relationshipName": "etiqueta",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "imagem",
+      "relationshipName": "imagem",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

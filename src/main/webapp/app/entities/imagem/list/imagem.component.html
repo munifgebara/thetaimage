@@ -1,0 +1,172 @@
+<div>
+  <h2 id="page-heading" data-cy="ImagemHeading">
+    <span>Imagems</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span>Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-imagem"
+        [routerLink]="['/imagem/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span>Criar novo Imagem</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (imagems?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span>Nenhum Imagem encontrado</span>
+    </div>
+  }
+
+  @if (imagems && imagems.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>Código</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nome">
+              <div class="d-flex">
+                <span>Nome</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="caminho">
+              <div class="d-flex">
+                <span>Caminho</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="mimeType">
+              <div class="d-flex">
+                <span>Mime Type</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="largura">
+              <div class="d-flex">
+                <span>Largura</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="altura">
+              <div class="d-flex">
+                <span>Altura</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dados">
+              <div class="d-flex">
+                <span>Dados</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dataset.id">
+              <div class="d-flex">
+                <span>Dataset</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="conjunto.id">
+              <div class="d-flex">
+                <span>Conjunto</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="classe.id">
+              <div class="d-flex">
+                <span>Classe</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+          @for (imagem of imagems; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/imagem', imagem.id, 'view']">{{ imagem.id }}</a>
+              </td>
+              <td>{{ imagem.nome }}</td>
+              <td>{{ imagem.caminho }}</td>
+              <td>{{ imagem.mimeType }}</td>
+              <td>{{ imagem.largura }}</td>
+              <td>{{ imagem.altura }}</td>
+              <td>
+                @if (imagem.dados) {
+                  <a (click)="openFile(imagem.dados, imagem.dadosContentType)">
+                    <img [src]="'data:' + imagem.dadosContentType + ';base64,' + imagem.dados" style="max-height: 30px" alt="imagem" />
+                  </a>
+                  <span>{{ imagem.dadosContentType }}, {{ byteSize(imagem.dados) }}</span>
+                }
+              </td>
+              <td>
+                @if (imagem.dataset) {
+                  <div>
+                    <a [routerLink]="['/dataset', imagem.dataset.id, 'view']">{{ imagem.dataset.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (imagem.conjunto) {
+                  <div>
+                    <a [routerLink]="['/conjunto', imagem.conjunto.id, 'view']">{{ imagem.conjunto.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (imagem.classe) {
+                  <div>
+                    <a [routerLink]="['/classe', imagem.classe.id, 'view']">{{ imagem.classe.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/imagem', imagem.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline">Visualizar</span>
+                  </a>
+
+                  <a [routerLink]="['/imagem', imagem.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline">Editar</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(imagem)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline">Excluir</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

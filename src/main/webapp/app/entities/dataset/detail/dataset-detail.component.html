@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (dataset(); as datasetRef) {
+      <div>
+        <h2 data-cy="datasetDetailsHeading"><span>Dataset</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>Código</span></dt>
+          <dd>
+            <span>{{ datasetRef.id }}</span>
+          </dd>
+          <dt><span>Nome</span></dt>
+          <dd>
+            <span>{{ datasetRef.nome }}</span>
+          </dd>
+          <dt><span>Descricao</span></dt>
+          <dd>
+            <span>{{ datasetRef.descricao }}</span>
+          </dd>
+          <dt><span>Diferenca Minima</span></dt>
+          <dd>
+            <span>{{ datasetRef.diferencaMinima }}</span>
+          </dd>
+          <dt><span>Usuario</span></dt>
+          <dd>
+            @if (dataset()!.usuario) {
+              <div>
+                <a [routerLink]="['/usuario', dataset()!.usuario?.id, 'view']">{{ datasetRef.usuario?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/dataset', datasetRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

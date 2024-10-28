@@ -1,0 +1,85 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (imagem(); as imagemRef) {
+      <div>
+        <h2 data-cy="imagemDetailsHeading"><span>Imagem</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>Código</span></dt>
+          <dd>
+            <span>{{ imagemRef.id }}</span>
+          </dd>
+          <dt><span>Nome</span></dt>
+          <dd>
+            <span>{{ imagemRef.nome }}</span>
+          </dd>
+          <dt><span>Caminho</span></dt>
+          <dd>
+            <span>{{ imagemRef.caminho }}</span>
+          </dd>
+          <dt><span>Mime Type</span></dt>
+          <dd>
+            <span>{{ imagemRef.mimeType }}</span>
+          </dd>
+          <dt><span>Largura</span></dt>
+          <dd>
+            <span>{{ imagemRef.largura }}</span>
+          </dd>
+          <dt><span>Altura</span></dt>
+          <dd>
+            <span>{{ imagemRef.altura }}</span>
+          </dd>
+          <dt><span>Dados</span></dt>
+          <dd>
+            @if (imagemRef.dados) {
+              <div>
+                <a (click)="openFile(imagemRef.dados ?? '', imagemRef.dadosContentType)">
+                  <img [src]="'data:' + imagemRef.dadosContentType + ';base64,' + imagemRef.dados" style="max-width: 100%" alt="imagem" />
+                </a>
+                {{ imagemRef.dadosContentType }}, {{ byteSize(imagemRef.dados ?? '') }}
+              </div>
+            }
+          </dd>
+          <dt><span>Dataset</span></dt>
+          <dd>
+            @if (imagem()!.dataset) {
+              <div>
+                <a [routerLink]="['/dataset', imagem()!.dataset?.id, 'view']">{{ imagemRef.dataset?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Conjunto</span></dt>
+          <dd>
+            @if (imagem()!.conjunto) {
+              <div>
+                <a [routerLink]="['/conjunto', imagem()!.conjunto?.id, 'view']">{{ imagemRef.conjunto?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Classe</span></dt>
+          <dd>
+            @if (imagem()!.classe) {
+              <div>
+                <a [routerLink]="['/classe', imagem()!.classe?.id, 'view']">{{ imagemRef.classe?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/imagem', imagemRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-dataset-heading" data-cy="DatasetCreateUpdateHeading">Criar ou editar Dataset</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_descricao">Descricao</label>
+          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_diferencaMinima">Diferenca Minima</label>
+          <input
+            type="number"
+            class="form-control"
+            name="diferencaMinima"
+            id="field_diferencaMinima"
+            data-cy="diferencaMinima"
+            formControlName="diferencaMinima"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_usuario">Usuario</label>
+          <select
+            class="form-control"
+            id="field_usuario"
+            data-cy="usuario"
+            name="usuario"
+            formControlName="usuario"
+            [compareWith]="compareUsuario"
+          >
+            <option [ngValue]="null"></option>
+            @for (usuarioOption of usuariosSharedCollection; track $index) {
+              <option [ngValue]="usuarioOption">{{ usuarioOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

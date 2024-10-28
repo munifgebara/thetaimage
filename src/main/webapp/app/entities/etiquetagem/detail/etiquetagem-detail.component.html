@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (etiquetagem(); as etiquetagemRef) {
+      <div>
+        <h2 data-cy="etiquetagemDetailsHeading"><span>Etiquetagem</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>Código</span></dt>
+          <dd>
+            <span>{{ etiquetagemRef.id }}</span>
+          </dd>
+          <dt><span>X</span></dt>
+          <dd>
+            <span>{{ etiquetagemRef.x }}</span>
+          </dd>
+          <dt><span>Y</span></dt>
+          <dd>
+            <span>{{ etiquetagemRef.y }}</span>
+          </dd>
+          <dt><span>Largura</span></dt>
+          <dd>
+            <span>{{ etiquetagemRef.largura }}</span>
+          </dd>
+          <dt><span>Altura</span></dt>
+          <dd>
+            <span>{{ etiquetagemRef.altura }}</span>
+          </dd>
+          <dt><span>Etiqueta</span></dt>
+          <dd>
+            @if (etiquetagem()!.etiqueta) {
+              <div>
+                <a [routerLink]="['/etiqueta', etiquetagem()!.etiqueta?.id, 'view']">{{ etiquetagemRef.etiqueta?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Imagem</span></dt>
+          <dd>
+            @if (etiquetagem()!.imagem) {
+              <div>
+                <a [routerLink]="['/imagem', etiquetagem()!.imagem?.id, 'view']">{{ etiquetagemRef.imagem?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/etiquetagem', etiquetagemRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

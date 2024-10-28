@@ -1,0 +1,145 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-imagem-heading" data-cy="ImagemCreateUpdateHeading">Criar ou editar Imagem</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_caminho">Caminho</label>
+          <input type="text" class="form-control" name="caminho" id="field_caminho" data-cy="caminho" formControlName="caminho" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_mimeType">Mime Type</label>
+          <input type="text" class="form-control" name="mimeType" id="field_mimeType" data-cy="mimeType" formControlName="mimeType" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_largura">Largura</label>
+          <input type="number" class="form-control" name="largura" id="field_largura" data-cy="largura" formControlName="largura" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_altura">Altura</label>
+          <input type="number" class="form-control" name="altura" id="field_altura" data-cy="altura" formControlName="altura" />
+        </div>
+
+        @let dadosRef = editForm.get('dados')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dados">Dados</label>
+          <div>
+            @if (dadosRef.value) {
+              <img
+                [src]="'data:' + editForm.get('dadosContentType')!.value + ';base64,' + dadosRef.value"
+                style="max-height: 100px"
+                alt="imagem"
+              />
+            }
+            @if (dadosRef.value) {
+              <div class="form-text text-danger clearfix">
+                <span class="pull-start">{{ editForm.get('dadosContentType')!.value }}, {{ byteSize(dadosRef.value!) }}</span>
+                <button
+                  type="button"
+                  (click)="clearInputImage('dados', 'dadosContentType', 'file_dados')"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input type="file" id="file_dados" data-cy="dados" (change)="setFileData($event, 'dados', true)" accept="image/*" />
+          </div>
+          <input type="hidden" class="form-control" name="dados" id="field_dados" data-cy="dados" formControlName="dados" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="dadosContentType"
+            id="field_dadosContentType"
+            formControlName="dadosContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_dataset">Dataset</label>
+          <select
+            class="form-control"
+            id="field_dataset"
+            data-cy="dataset"
+            name="dataset"
+            formControlName="dataset"
+            [compareWith]="compareDataset"
+          >
+            <option [ngValue]="null"></option>
+            @for (datasetOption of datasetsSharedCollection; track $index) {
+              <option [ngValue]="datasetOption">{{ datasetOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_conjunto">Conjunto</label>
+          <select
+            class="form-control"
+            id="field_conjunto"
+            data-cy="conjunto"
+            name="conjunto"
+            formControlName="conjunto"
+            [compareWith]="compareConjunto"
+          >
+            <option [ngValue]="null"></option>
+            @for (conjuntoOption of conjuntosSharedCollection; track $index) {
+              <option [ngValue]="conjuntoOption">{{ conjuntoOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_classe">Classe</label>
+          <select
+            class="form-control"
+            id="field_classe"
+            data-cy="classe"
+            name="classe"
+            formControlName="classe"
+            [compareWith]="compareClasse"
+          >
+            <option [ngValue]="null"></option>
+            @for (classeOption of classesSharedCollection; track $index) {
+              <option [ngValue]="classeOption">{{ classeOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

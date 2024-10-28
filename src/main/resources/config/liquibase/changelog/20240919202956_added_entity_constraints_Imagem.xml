@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Imagem.
+    -->
+    <changeSet id="20240919202956-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="dataset_id"
+                                 baseTableName="imagem"
+                                 constraintName="fk_imagem__dataset_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="dataset"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="conjunto_id"
+                                 baseTableName="imagem"
+                                 constraintName="fk_imagem__conjunto_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="conjunto"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="classe_id"
+                                 baseTableName="imagem"
+                                 constraintName="fk_imagem__classe_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="classe"
+                                 />
+    </changeSet>
+</databaseChangeLog>

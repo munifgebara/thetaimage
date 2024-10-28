@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "changelogDate": "20240919202957"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "senha",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "tipo",
+      "fieldType": "TipoUsuario",
+      "fieldValues": "ADMINISTRADOR,USUARIO"
+    }
+  ],
+  "name": "Usuario",
+  "pagination": "infinite-scroll",
+  "relationships": [],
+  "searchEngine": "no"
+}

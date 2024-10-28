@@ -1,0 +1,32 @@
+{
+  "annotations": {
+    "changelogDate": "20240919202953"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "diferencaMinima",
+      "fieldType": "Double"
+    }
+  ],
+  "name": "Dataset",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityName": "usuario",
+      "relationshipName": "usuario",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

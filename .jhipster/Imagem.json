@@ -1,0 +1,56 @@
+{
+  "annotations": {
+    "changelogDate": "20240919202956"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "caminho",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mimeType",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "largura",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "altura",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "dados",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "name": "Imagem",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityName": "dataset",
+      "relationshipName": "dataset",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "conjunto",
+      "relationshipName": "conjunto",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "classe",
+      "relationshipName": "classe",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

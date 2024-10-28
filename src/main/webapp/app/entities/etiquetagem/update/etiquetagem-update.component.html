@@ -1,0 +1,88 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-etiquetagem-heading" data-cy="EtiquetagemCreateUpdateHeading">Criar ou editar Etiquetagem</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_x">X</label>
+          <input type="number" class="form-control" name="x" id="field_x" data-cy="x" formControlName="x" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_y">Y</label>
+          <input type="number" class="form-control" name="y" id="field_y" data-cy="y" formControlName="y" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_largura">Largura</label>
+          <input type="number" class="form-control" name="largura" id="field_largura" data-cy="largura" formControlName="largura" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_altura">Altura</label>
+          <input type="number" class="form-control" name="altura" id="field_altura" data-cy="altura" formControlName="altura" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_etiqueta">Etiqueta</label>
+          <select
+            class="form-control"
+            id="field_etiqueta"
+            data-cy="etiqueta"
+            name="etiqueta"
+            formControlName="etiqueta"
+            [compareWith]="compareEtiqueta"
+          >
+            <option [ngValue]="null"></option>
+            @for (etiquetaOption of etiquetasSharedCollection; track $index) {
+              <option [ngValue]="etiquetaOption">{{ etiquetaOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_imagem">Imagem</label>
+          <select
+            class="form-control"
+            id="field_imagem"
+            data-cy="imagem"
+            name="imagem"
+            formControlName="imagem"
+            [compareWith]="compareImagem"
+          >
+            <option [ngValue]="null"></option>
+            @for (imagemOption of imagemsSharedCollection; track $index) {
+              <option [ngValue]="imagemOption">{{ imagemOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

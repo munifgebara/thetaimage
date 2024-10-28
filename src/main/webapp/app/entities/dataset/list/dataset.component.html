@@ -1,0 +1,115 @@
+<div>
+  <h2 id="page-heading" data-cy="DatasetHeading">
+    <span>Datasets</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span>Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-dataset"
+        [routerLink]="['/dataset/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span>Criar novo Dataset</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (datasets?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span>Nenhum Dataset encontrado</span>
+    </div>
+  }
+
+  @if (datasets && datasets.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>Código</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nome">
+              <div class="d-flex">
+                <span>Nome</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="descricao">
+              <div class="d-flex">
+                <span>Descricao</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="diferencaMinima">
+              <div class="d-flex">
+                <span>Diferenca Minima</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="usuario.id">
+              <div class="d-flex">
+                <span>Usuario</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+          @for (dataset of datasets; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/dataset', dataset.id, 'view']">{{ dataset.id }}</a>
+              </td>
+              <td>{{ dataset.nome }}</td>
+              <td>{{ dataset.descricao }}</td>
+              <td>{{ dataset.diferencaMinima }}</td>
+              <td>
+                @if (dataset.usuario) {
+                  <div>
+                    <a [routerLink]="['/usuario', dataset.usuario.id, 'view']">{{ dataset.usuario.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/dataset', dataset.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline">Visualizar</span>
+                  </a>
+
+                  <a [routerLink]="['/dataset', dataset.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline">Editar</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(dataset)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline">Excluir</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

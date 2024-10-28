@@ -1,0 +1,99 @@
+<div>
+  <h2 id="page-heading" data-cy="EtiquetaHeading">
+    <span>Etiquetas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span>Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-etiqueta"
+        [routerLink]="['/etiqueta/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span>Criar novo Etiqueta</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (etiquetas?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span>Nenhum Etiqueta encontrado</span>
+    </div>
+  }
+
+  @if (etiquetas && etiquetas.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>Código</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nome">
+              <div class="d-flex">
+                <span>Nome</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dataset.id">
+              <div class="d-flex">
+                <span>Dataset</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+          @for (etiqueta of etiquetas; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/etiqueta', etiqueta.id, 'view']">{{ etiqueta.id }}</a>
+              </td>
+              <td>{{ etiqueta.nome }}</td>
+              <td>
+                @if (etiqueta.dataset) {
+                  <div>
+                    <a [routerLink]="['/dataset', etiqueta.dataset.id, 'view']">{{ etiqueta.dataset.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/etiqueta', etiqueta.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline">Visualizar</span>
+                  </a>
+
+                  <a [routerLink]="['/etiqueta', etiqueta.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline">Editar</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(etiqueta)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline">Excluir</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
